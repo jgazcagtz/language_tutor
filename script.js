@@ -199,7 +199,7 @@ async function processAudio(audioBlob) {
         formData.append('audio', audioBlob, 'recording.webm');
         formData.append('language', languageSelect.value);
         
-        const response = await fetch('/api/transcribe', {
+        const response = await fetch('https://language-tutor-opal.vercel.app/api/transcribe', {
             method: 'POST',
             body: formData
         });
