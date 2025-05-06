@@ -97,7 +97,7 @@ async function sendMessage() {
         const language = languageSelect.value;
         
         // Call the backend API
-        const response = await fetch('/api/chat', {
+        const response = await fetch('https://language-tutor-opal.vercel.app/api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
