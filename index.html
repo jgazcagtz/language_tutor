@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Language Tutor Pro </title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Language Tutor Pro 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Moving Banner -->
+    <div class="moving-banner">
+        <p>🌟 Welcome to Language Tutor Pro 2025! Supporting English, Spanish, French, German, Portuguese with AI-powered voice & text learning. Try speaking or typing in any language! 🎙️ ✍️</p>
+    </div>
+
+    <div class="chat-container">
+        <header>
+            <h1>Language Tutor Pro <span class="badge">2025</span></h1>
+            <p>Your AI-Powered Multilingual Learning Companion <i class="fas fa-robot"></i></p>
+            <div class="language-selector">
+                <select id="language-select">
+                    <option value="auto">Auto-Detect</option>
+                    <option value="en-US">English</option>
+                    <option value="es-ES">Spanish</option>
+                    <option value="fr-FR">French</option>
+                    <option value="de-DE">German</option>
+                    <option value="pt-PT">Portuguese</option>
+                </select>
+            </div>
+        </header>
+        
+        <div id="chat-log" class="chat-log">
+            <!-- Initial welcome message -->
+            <div class="bot-message message welcome-message">
+                <div class="message-content">
+                    <p>Hello! I'm your AI Language Tutor. I can help you learn English, Spanish, French, German, or Portuguese. You can:</p>
+                    <ul>
+                        <li>Ask grammar or vocabulary questions</li>
+                        <li>Practice conversations</li>
+                        <li>Get pronunciation feedback</li>
+                        <li>Request language assessments</li>
+                    </ul>
+                    <p>Try speaking or typing in any supported language!</p>
+                </div>
+                <div class="message-meta">
+                    <span class="timestamp">Just now</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="input-area">
+            <div class="typing-indicator" id="typing-indicator">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <input type="text" id="user-input" placeholder="Type your message or question..." />
+            <button id="send-button" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+            <button id="mic-button" onclick="toggleVoiceRecognition()" title="Voice Input">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+
+        <footer>
+            <button class="tutorial-button" onclick="openTutorial()">
+                <i class="fas fa-book"></i> User Guide
+            </button>
+            <p>&copy; <span id="year"></span> <a href="https://learnwg.vercel.app/" target="_blank">LearnWG</a></p>
+        </footer>
+    </div>
+
+    <!-- Tutorial Modal -->
+    <div id="tutorial-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTutorial()">&times;</span>
+            <section class="tutorial-section">
+                <h2><i class="fas fa-graduation-cap"></i> Language Tutor Pro Guide</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-language"></i>
+                        <h3>Multilingual Support</h3>
+                        <p>Supports English, Spanish, French, German, and Portuguese with auto-detection.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-microphone"></i>
+                        <h3>Voice Interaction</h3>
+                        <p>Speak naturally using OpenAI's advanced speech recognition.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-comment-dots"></i>
+                        <h3>Conversation Practice</h3>
+                        <p>Practice real conversations with contextual responses.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-spell-check"></i>
+                        <h3>Grammar Correction</h3>
+                        <p>Get detailed explanations and corrections for mistakes.</p>
+                    </div>
+                </div>
+                <h3>Getting Started</h3>
+                <ol>
+                    <li>Select a language or use auto-detect</li>
+                    <li>Type or speak your question/message</li>
+                    <li>Receive instant AI-powered feedback</li>
+                    <li>Ask for explanations or clarifications</li>
+                </ol>
+                <div class="tips">
+                    <h3><i class="fas fa-lightbulb"></i> Pro Tips</h3>
+                    <ul>
+                        <li>Say "Can you correct this sentence?" for grammar help</li>
+                        <li>Ask "How do I pronounce...?" for pronunciation guides</li>
+                        <li>Request "Give me a conversation practice" for interactive exercises</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Set the current year in the footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
