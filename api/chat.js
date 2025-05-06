@@ -1,93 +1,54 @@
-const { OpenAI } = require('openai');
-const fs = require('fs');
-const path = require('path');
+import { OpenAI } from 'openai';
 
-// Initialize OpenAI with your API key
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY
 });
 
-// Chat endpoint
-module.exports.chatHandler = async (req, res) => {
-    try {
-        const { message, language, history } = req.body;
-        
-        // Update system prompt based on selected language
-        let systemPrompt = `You are Language Tutor Pro, an AI language teaching assistant specializing in English, Spanish, French, German, and Portuguese. Respond in the same language as the user's input.`;
-        
-        if (language && language !== 'auto') {
-            const langMap = {
-                'en-US': 'English',
-                'es-ES': 'Spanish',
-                'fr-FR': 'French',
-                'de-DE': 'German',
-                'pt-PT': 'Portuguese'
-            };
-            systemPrompt = `You are Language Tutor Pro, teaching ${langMap[language]}. Respond in ${langMap[language]} unless the user requests otherwise.`;
-        }
-        
-        // Prepare messages for OpenAI
-        const messages = [
-            { role: 'system', content: systemPrompt },
-            ...history.slice(-6) // Keep last 6 messages for context
-        ];
-        
-        if (message) {
-            messages.push({ role: 'user', content: message });
-        }
-        
-        // Call OpenAI API
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4-turbo-preview",
-            messages,
-            temperature: 0.7,
-            max_tokens: 500,
-            top_p: 1,
-            frequency_penalty: 0,
-            presence_penalty: 0
-        });
-        
-        const response = completion.choices[0]?.message?.content || "I didn't get a response. Please try again.";
-        
-        res.json({ response });
-        
-    } catch (error) {
-        console.error('Error in chatHandler:', error);
-        res.status(500).json({ error: error.message });
-    }
-};
+export default async function handler(req, res) {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', 'https://language-tutor-opal.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-// Transcription endpoint (using OpenAI Whisper)
-module.exports.transcribeHandler = async (req, res) => {
-    try {
-        if (!req.file) {
-            throw new Error('No audio file uploaded');
-        }
-        
-        const { language } = req.body;
-        
-        // Save the file temporarily
-        const tempFilePath = path.join('/tmp', `audio-${Date.now()}.webm`);
-        await fs.promises.writeFile(tempFilePath, req.file.buffer);
-        
-        // Transcribe with OpenAI Whisper
-        const transcription = await openai.audio.transcriptions.create({
-            file: fs.createReadStream(tempFilePath),
-            model: "whisper-1",
-            language: language === 'auto' ? undefined : language?.split('-')[0],
-            response_format: "json"
-        });
-        
-        // Clean up
-        await fs.promises.unlink(tempFilePath);
-        
-        res.json({
-            text: transcription.text,
-            language: transcription.language
-        });
-        
-    } catch (error) {
-        console.error('Error in transcribeHandler:', error);
-        res.status(500).json({ error: error.message });
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  try {
+    const { message, language, history } = req.body;
+
+    if (!message) {
+      return res.status(400).json({ error: 'Message is required' });
     }
-};
+
+    const messages = [
+      {
+        role: "system",
+        content: `You are Language Tutor Pro, an AI language teaching assistant. Respond in ${language || 'English'}.`
+      },
+      ...(history || []),
+      { role: "user", content: message }
+    ];
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages,
+      temperature: 0.7,
+    });
+
+    return res.status(200).json({ 
+      response: completion.choices[0]?.message?.content 
+    });
+
+  } catch (error) {
+    console.error('API Error:', error);
+    return res.status(500).json({ 
+      error: 'Internal server error',
+      details: error.message 
+    });
+  }
+}
