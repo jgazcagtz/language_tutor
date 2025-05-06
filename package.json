@@ -1,0 +1,31 @@
+{
+  "name": "language-tutor-pro",
+  "version": "1.0.0",
+  "description": "AI-powered language learning chatbot with voice recognition",
+  "main": "index.js",
+  "scripts": {
+    "start": "vercel dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "openai": "^4.24.1",
+    "formidable": "^3.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@vercel/node": "^2.15.3"
+  },
+  "engines": {
+    "node": ">=18.x"
+  },
+  "keywords": [
+    "language-learning",
+    "chatbot",
+    "AI",
+    "OpenAI",
+    "Whisper"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
